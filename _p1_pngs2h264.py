@@ -22,9 +22,10 @@ def merge_images_to_h264(input_base_dir, video_name, output_base_dir):
         '-frames:v', '15',  # Process only 15 frames
         '-c:v', 'libx264',                  # Video codec
         # '-bf', '0',                         # Force no B frames
+        '-partitions', 'none',
+        '-x264-params', 'keyint=1:min-keyint=1',  # Force every frame to be a key frame (I-frame)
         '-pix_fmt', 'yuv420p',              # Pixel format
         '-vf', 'scale=iw/4:ih/4',           # Scale the images if needed to ensure dimensions are even
-        # '-partitions', 'none',
         # '-x264-params', 'subme=1',
         # '-x264-params', 'partitions=-parti4x4,-parti8x8,-partp8x8,-partp4x4,-partb8x8', 
         os.path.join(output_base_dir, video_name + ".mp4")  # Output video path
